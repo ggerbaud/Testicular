@@ -25,5 +25,33 @@
   "Role": {
     "dataSource": "db",
     "public": false
+  },
+  "Question": {
+    "dataSource": "db",
+    "public": true
+  },
+  "Answer": {
+    "dataSource": "db",
+    "public": true
+  },
+  "Attempt": {
+    "dataSource": "db",
+    "public": true
+  },
+  "Evaluation": {
+    "dataSource": "db",
+    "public": true
+  },
+  "Theme": {
+    "dataSource": "db",
+    "public": true
+  },
+  "Quizz": {
+    "dataSource": "db",
+    "public": true
+  },
+  "Interview": {
+    "dataSource": "db",
+    "public": true
   }
 }

@@ -1,0 +1,43 @@
+{
+  "name": "Question",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "properties": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "type": {
+      "type": "string",
+      "required": true
+    },
+    "choices": {
+      "type": [
+        "string"
+      ]
+    },
+    "code": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "answer": {
+      "type": "hasOne",
+      "model": "Answer",
+      "foreignKey": "questionId"
+    },
+    "themes": {
+      "type": "hasAndBelongsToMany",
+      "model": "Theme",
+      "foreignKey": "questionId"
+    },
+    "attempts": {
+      "type": "hasMany",
+      "model": "Attempt",
+      "foreignKey": "questionId"
+    }
+  },
+  "acls": [],
+  "methods": []
+}

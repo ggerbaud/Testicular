@@ -1,0 +1,26 @@
+{
+  "name": "Answer",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "properties": {
+    "choices": {
+      "type": [
+        "boolean"
+      ]
+    },
+    "comment": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {
+    "question": {
+      "type": "belongsTo",
+      "model": "Question",
+      "foreignKey": ""
+    }
+  },
+  "acls": [],
+  "methods": []
+}

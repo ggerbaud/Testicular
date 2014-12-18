@@ -1,0 +1,27 @@
+{
+  "name": "Interview",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "properties": {
+    "state": {
+      "type": "number",
+      "required": true
+    },
+    "startDate": {
+      "type": "date"
+    },
+    "endDate": {
+      "type": "date"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "attempts": {
+      "type": "hasMany",
+      "model": "Attempt",
+      "foreignKey": "interviewId"
+    }
+  },
+  "acls": [],
+  "methods": []
+}

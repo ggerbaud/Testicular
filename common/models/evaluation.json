@@ -1,0 +1,18 @@
+{
+  "name": "Evaluation",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "properties": {
+    "score": {
+      "type": "number",
+      "required": true
+    },
+    "comment": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": []
+}

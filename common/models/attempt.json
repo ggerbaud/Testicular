@@ -1,0 +1,31 @@
+{
+  "name": "Attempt",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "properties": {
+    "choices": {
+      "type": [
+        "boolean"
+      ]
+    },
+    "comment": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {
+    "question": {
+      "type": "hasOne",
+      "model": "Question",
+      "foreignKey": "attemptId"
+    },
+    "evaluation": {
+      "type": "hasOne",
+      "model": "Evaluation",
+      "foreignKey": "attemptId"
+    }
+  },
+  "acls": [],
+  "methods": []
+}

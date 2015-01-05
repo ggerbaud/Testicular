@@ -29,13 +29,18 @@
     },
     "themes": {
       "type": "hasAndBelongsToMany",
-      "model": "Theme",
-      "foreignKey": "questionId"
+      "model": "Theme"
     },
     "attempts": {
       "type": "hasMany",
       "model": "Attempt",
       "foreignKey": "questionId"
+    },
+    "quizzs": {
+      "type": "hasMany",
+      "model": "Quizz",
+      "foreignKey": "quizzId",
+      "through": "QuizzQuestion"
     }
   },
   "acls": [],

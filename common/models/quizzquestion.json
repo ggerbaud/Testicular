@@ -1,15 +1,10 @@
 {
-  "name": "Attempt",
+  "name": "QuizzQuestion",
   "base": "PersistedModel",
   "idInjection": true,
   "properties": {
-    "choices": {
-      "type": [
-        "boolean"
-      ]
-    },
-    "comment": {
-      "type": "string",
+    "order": {
+      "type": "number",
       "required": true
     }
   },
@@ -18,12 +13,12 @@
     "question": {
       "type": "belongsTo",
       "model": "Question",
-      "foreignKey": ""
+      "foreignKey": "questionId"
     },
-    "evaluation": {
-      "type": "hasOne",
-      "model": "Evaluation",
-      "foreignKey": "attemptId"
+    "quizz": {
+      "type": "belongsTo",
+      "model": "Quizz",
+      "foreignKey": "quizzId"
     }
   },
   "acls": [],

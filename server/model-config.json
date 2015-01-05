@@ -53,5 +53,9 @@
   "Interview": {
     "dataSource": "db",
     "public": true
+  },
+  "QuizzQuestion": {
+    "dataSource": "db",
+    "public": true
   }
 }

@@ -1,5 +1,6 @@
 {
   "name": "Quizz",
+  "plural": "Quizz",
   "base": "PersistedModel",
   "idInjection": true,
   "properties": {
@@ -13,7 +14,12 @@
     "questions": {
       "type": "hasMany",
       "model": "Question",
-      "foreignKey": "quizzId"
+      "foreignKey": "questionId",
+      "through": "QuizzQuestion"
+    },
+    "interviews": {
+      "type": "hasAndBelongsToMany",
+      "model": "Interview"
     }
   },
   "acls": [],

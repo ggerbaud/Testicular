@@ -12,8 +12,7 @@
   "relations": {
     "questions": {
       "type": "hasAndBelongsToMany",
-      "model": "Question",
-      "foreignKey": "themeId"
+      "model": "Question"
     }
   },
   "acls": [],

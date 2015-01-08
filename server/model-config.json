@@ -57,5 +57,13 @@
   "QuizzQuestion": {
     "dataSource": "db",
     "public": true
+  },
+  "ZenUser": {
+    "dataSource": "db",
+    "public": true
+  },
+  "QuizzAttempt": {
+    "dataSource": "db",
+    "public": true
   }
 }

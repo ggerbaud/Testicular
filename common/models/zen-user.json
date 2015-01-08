@@ -1,24 +1,14 @@
 {
-  "name": "QuizzQuestion",
-  "base": "PersistedModel",
+  "name": "ZenUser",
+  "base": "User",
   "idInjection": true,
-  "properties": {
-    "order": {
-      "type": "number",
-      "required": true
-    }
-  },
+  "properties": {},
   "validations": [],
   "relations": {
-    "question": {
-      "type": "belongsTo",
-      "model": "Question",
-      "foreignKey": "questionId"
-    },
-    "quizz": {
-      "type": "belongsTo",
-      "model": "Quizz",
-      "foreignKey": "quizzId"
+    "interviews": {
+      "type": "hasMany",
+      "model": "Interview",
+      "foreignKey": "ownerId"
     }
   },
   "acls": [
@@ -33,6 +23,13 @@
       "principalType": "ROLE",
       "principalId": "root",
       "permission": "ALLOW"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "userInterview"
     }
   ],
   "methods": []

@@ -17,5 +17,11 @@
   "unused": false,
   "trailing": true,
   "sub": true,
-  "maxlen": 80
+  "maxlen": 80,
+  "curly" : true,
+  "forin" : true,
+  "strict" : true,
+  "globals": {
+      "angular": false
+  }
 }

@@ -28,3 +28,14 @@ node_modules
 .lock-wscript
 
 .idea/*
+.idea
+
+.tmp
+.tmp/
+
+dist
+app/vendor
+
+*.iml
+.DS_Store
+.sass-cache/

@@ -1,0 +1,12 @@
+{
+	"name": "zen-quizz",
+	"version": "",
+	"dependencies": {
+		"angular": "",
+		"angular-route": ""
+	},
+	"devDependencies": {
+		
+	}
+}
+

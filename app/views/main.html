@@ -1,0 +1,11 @@
+<div ng-show="itw">
+  <h2>{{itw.name}}</h2>
+  <ul>
+    <li ng-repeat="qz in itw.quizzAttempts">
+      <a href="#/do/quizz/{{qz.id}}">{{qz.quizz.name}}</a>
+    </li>
+  </ul>
+</div>
+<div ng-hide="itw">
+  No interview
+</div>

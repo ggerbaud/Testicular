@@ -1,0 +1,23 @@
+<div>
+  <h2>{{q.question.title}}</h2>
+
+  <div ng-switch="q.question.type">
+
+    <div ng-switch-when="1">
+      <p ng-repeat="c in q.question.choices">
+        {{c}} : <input type="checkbox" ng-model="q.attempt.choices[$index]" name="c"/>
+      </p>
+    </div>
+
+  </div>
+
+  <form name="qs">
+
+    Commentaire * :<br/>
+    <textarea name="comment" ng-model="q.attempt.comment" ng-required="!q.attempt.comment"></textarea><br/><br/>
+
+    <a href="#/do/quizz/{{quizzId}}/question/{{questionNo - 1}}" ng-hide="questionNo == 0">Annuler et
+      Précédente</a><br/>
+    <a href="" ng-click="next()" ng-show="qs.comment.$valid">Valider et suivante</a><br/>
+  </form>
+</div>

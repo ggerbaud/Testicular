@@ -18,39 +18,45 @@ module.exports = function (QuizzAttempt) {
     });
   };
 
-  QuizzAttempt.prototype.quizzQuestions = function (n, total, cb) {
+  QuizzAttempt.prototype.quizzQuestions = function (n, cb) {
+    var error = {name: "No Question", message: "That question does not exist", status: 404};
     var out = {};
     var zeThis = this;
-    this.quizz(function (er, quizz) {
-      if (er) cb(er);
-
-      QuizzAttempt.questions({
-        where: {
-          quizzId: quizz.id
-        },
-        include: 'question',
-        order: 'order ASC',
-        skip: n,
-        limit: 1
-      }, function (er, qs) {
+    if(this.state == 2) cb(error);
+    else {
+      this.quizz(function (er, quizz) {
         if (er) cb(er);
-        out.question = qs[0].question();
-        out.rank = n;
-        out.total = total;
-        zeThis.attempts({
+
+        QuizzAttempt.questions({
           where: {
-            and: [{quizzAttemptId: zeThis.id}, {questionId: out.question.id}]
+            quizzId: quizz.id
+          },
+          include: 'question',
+          order: 'order ASC',
+          skip: n,
+          limit: 1
+        }, function (er, qs) {
+          if (er) cb(er);
+          else if (!qs || qs.length == 0) cb(error);
+          else {
+            out.question = qs[0].question();
+            out.rank = n;
+            zeThis.attempts({
+              where: {
+                and: [{quizzAttemptId: zeThis.id}, {questionId: out.question.id}]
+              }
+            }, function (er, atts) {
+              if (er) {
+                out.attempt = null;
+              } else {
+                out.attempt = atts[0];
+              }
+              cb(null, out);
+            });
           }
-        }, function (er, atts) {
-          if (er) {
-            out.attempt = null;
-          } else {
-            out.attempt = atts[0];
-          }
-          cb(null, out);
         });
       });
-    });
+    }
   };
 
   QuizzAttempt.prototype.validate = function (cb) {
@@ -58,24 +64,26 @@ module.exports = function (QuizzAttempt) {
     zeThis.state = 2;
     zeThis.save(function (er, obj) {
       if (er) cb(er);
-      QuizzAttempt.findOne({
+      else QuizzAttempt.findOne({
         where: {
           userId: zeThis.userId,
           state: 1
         }
       }, function (er, res) {
         if (er) cb(er);
-        if (res) {
+        else if (res) {
           console.log(res);
-          cb();
+          cb(null,200);
         } else {
           zeThis.interview(function (er, itw) {
             if (er) cb(er);
-            itw.state = 2;
-            itw.save(function (er) {
-              if (er) cb(er);
-              cb();
-            });
+            else {
+              itw.state = 2;
+              itw.save(function (er) {
+                if (er) cb(er);
+                cb(null, 204);
+              });
+            }
           });
         }
       });
@@ -94,8 +102,7 @@ module.exports = function (QuizzAttempt) {
 
   QuizzAttempt.remoteMethod('quizzQuestions', {
     accepts: [
-      {arg: 'n', type: 'number', http: {source: 'path'}},
-      {arg: 'total', type: 'number'}
+      {arg: 'n', type: 'number', http: {source: 'path'}}
     ],
     returns: {root: true, type: 'object'},
     http: {path: '/question/:n', verb: 'get'},
@@ -103,6 +110,7 @@ module.exports = function (QuizzAttempt) {
   });
 
   QuizzAttempt.remoteMethod('validate', {
+    returns: {type: 'number', arg: 'status'},
     http: {path: '/validate', verb: 'get'},
     isStatic: false
   });

@@ -39,3 +39,5 @@ app/vendor
 *.iml
 .DS_Store
 .sass-cache/
+
+docular_generated/*

@@ -1,0 +1,8 @@
+<div>
+  <h2>{{info.quizzName}}</h2>
+  Vous avez répondu à toutes les questions<br/>
+
+  <a ng-hide="validated" href="#/do/quizz/{{info.attempt.id}}/question/0">Revoir les réponses</a><br/>
+  <a ng-hide="validated" href="" ng-click="validate()">Valider les réponses</a>
+  <span ng-show="validated">Tout est validé, vous pouvez quitter l'application</span>
+</div>

@@ -60,6 +60,13 @@
       "principalId": "rh",
       "permission": "ALLOW",
       "property": "getCandidat"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "itw",
+      "permission": "ALLOW",
+      "property": "newSpecialUser"
     }
   ],
   "methods": []

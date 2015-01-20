@@ -1,5 +1,7 @@
 module.exports = function (QuizzAttempt) {
 
+  // state = 1 : not validated, 2 : validated, 3 : corrected
+
   QuizzAttempt.prototype.quizzInfo = function (cb) {
     var out = {};
     out.attempt = this;

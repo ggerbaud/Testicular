@@ -12,6 +12,48 @@ module.exports = function (ZenUser) {
     });
   };
 
+  ZenUser.newSpecialUser = function (email, name, role, cb) {
+    if (!_.isString(email) || _.isEmpty(email)) {
+      cb({message: "email should be a string", status: 400})
+      return;
+    }
+    if (!_.isString(name) || _.isEmpty(name)) {
+      cb({message: "name should be a string", status: 400})
+      return;
+    }
+
+    var zenUser = {
+      email: email,
+      normalName: name,
+      password: passwd(8),
+      candidat: false
+    };
+    ZenUser.create(zenUser, function (er, user) {
+      if (er) cb(er);
+      else {
+        user.generated = zenUser.password;
+        var Role = ZenUser.app.models.Role;
+        var RoleMapping = ZenUser.app.models.RoleMapping;
+        Role.findOne({where: {name: role}}, function (er, r) {
+          if (er) cb(er);
+          else {
+            console.log(Role);
+            r.principals.create(
+              {
+                principalType: RoleMapping.USER,
+                principalId: user.id
+              },
+              function (er) {
+                if (er) cb(er);
+                else cb(null, user);
+              }
+            );
+          }
+        });
+      }
+    });
+  };
+
   ZenUser.newCandidat = function (email, name, cb) {
     if (!_.isString(email) || _.isEmpty(email)) {
       cb({message: "email should be a string", status: 400})
@@ -52,10 +94,6 @@ module.exports = function (ZenUser) {
     }, cb);
   };
 
-  ZenUser.loginAndRole = function (data, cb) {
-    ZenUser.login();
-  };
-
   ZenUser.remoteMethod('userInterview', {
     returns: {root: true, type: 'Interview'},
     http: {path: '/myInterview', verb: 'get'},
@@ -69,6 +107,16 @@ module.exports = function (ZenUser) {
     ],
     returns: {root: true, type: 'ZenUser'},
     http: {path: '/createCandidat', verb: 'post'}
+  });
+
+  ZenUser.remoteMethod('newSpecialUser', {
+    accepts: [
+      {arg: 'email', type: 'string', required: true},
+      {arg: 'name', type: 'string', required: true},
+      {arg: 'role', type: 'string', required: true}
+    ],
+    returns: {root: true, type: 'ZenUser'},
+    http: {path: '/createSpecialUser', verb: 'post'}
   });
 
   ZenUser.remoteMethod('listCandidats', {

@@ -18,6 +18,9 @@
     },
     "code": {
       "type": "string"
+    },
+    "language": {
+      "type": "string"
     }
   },
   "validations": [],
@@ -55,6 +58,25 @@
       "principalType": "ROLE",
       "principalId": "root",
       "permission": "ALLOW"
+    },
+    {
+      "accessType": "READ",
+      "principalType": "ROLE",
+      "principalId": "itw",
+      "permission": "ALLOW"
+    },
+    {
+      "accessType": "WRITE",
+      "principalType": "ROLE",
+      "principalId": "itw",
+      "permission": "ALLOW"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "itw",
+      "permission": "ALLOW",
+      "property": "unanswered"
     }
   ],
   "methods": []

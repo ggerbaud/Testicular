@@ -27,6 +27,32 @@
       "principalType": "ROLE",
       "principalId": "root",
       "permission": "ALLOW"
+    },
+    {
+      "accessType": "READ",
+      "principalType": "ROLE",
+      "principalId": "itw",
+      "permission": "ALLOW"
+    },
+    {
+      "accessType": "WRITE",
+      "principalType": "ROLE",
+      "principalId": "itw",
+      "permission": "ALLOW"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "itw",
+      "permission": "ALLOW",
+      "property": "__link__questions"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "itw",
+      "permission": "ALLOW",
+      "property": "__unlink__questions"
     }
   ],
   "methods": []

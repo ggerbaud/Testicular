@@ -15,9 +15,11 @@
     "compression": "^1.0.3",
     "errorhandler": "^1.1.1",
     "grunt-docular": "^0.2.4",
+    "lodash": "^2.4.1",
     "loopback": "^2.8.0",
     "loopback-boot": "^2.4.0",
     "loopback-datasource-juggler": "^2.7.0",
+    "password-maker": "^1.0.5",
     "serve-favicon": "^2.0.1"
   },
   "optionalDependencies": {

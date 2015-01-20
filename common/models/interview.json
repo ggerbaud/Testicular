@@ -11,10 +11,7 @@
       "type": "number",
       "required": true
     },
-    "startDate": {
-      "type": "date"
-    },
-    "endDate": {
+    "validationDate": {
       "type": "date"
     }
   },
@@ -27,7 +24,8 @@
     },
     "user": {
       "type": "belongsTo",
-      "model": "ZenUser"
+      "model": "ZenUser",
+      "foreignKey": "ownerId"
     }
   },
   "acls": [
@@ -41,6 +39,33 @@
       "accessType": "*",
       "principalType": "ROLE",
       "principalId": "root",
+      "permission": "ALLOW"
+    },
+    {
+      "accessType": "WRITE",
+      "principalType": "ROLE",
+      "principalId": "rh",
+      "permission": "ALLOW",
+      "property": "create"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "rh",
+      "permission": "ALLOW",
+      "property": "__create__quizzAttempts"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "rh",
+      "permission": "ALLOW",
+      "property": "__destroyById__quizzAttempts"
+    },
+    {
+      "accessType": "READ",
+      "principalType": "ROLE",
+      "principalId": "rh",
       "permission": "ALLOW"
     }
   ],

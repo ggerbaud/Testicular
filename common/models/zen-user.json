@@ -2,7 +2,16 @@
   "name": "ZenUser",
   "base": "User",
   "idInjection": true,
-  "properties": {},
+  "properties": {
+    "normalName": {
+      "type": "string",
+      "required": true
+    },
+    "candidat": {
+      "type": "boolean",
+      "required": false
+    }
+  },
   "validations": [],
   "relations": {
     "interviews": {
@@ -30,6 +39,27 @@
       "principalId": "$owner",
       "permission": "ALLOW",
       "property": "userInterview"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "rh",
+      "permission": "ALLOW",
+      "property": "newCandidat"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "rh",
+      "permission": "ALLOW",
+      "property": "listCandidats"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "rh",
+      "permission": "ALLOW",
+      "property": "getCandidat"
     }
   ],
   "methods": []

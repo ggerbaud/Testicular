@@ -7,10 +7,7 @@
       "type": "number",
       "required": true
     },
-    "startDate": {
-      "type": "date"
-    },
-    "endDate": {
+    "validationDate": {
       "type": "date"
     }
   },
@@ -33,7 +30,7 @@
     "owner": {
       "type": "belongsTo",
       "model": "ZenUser",
-      "foreignKey": "userId"
+      "foreignKey": "ownerId"
     }
   },
   "acls": [
@@ -83,6 +80,12 @@
       "principalId": "$owner",
       "permission": "ALLOW",
       "property": "validate"
+    },
+    {
+      "accessType": "READ",
+      "principalType": "ROLE",
+      "principalId": "rh",
+      "permission": "ALLOW"
     }
   ],
   "methods": []

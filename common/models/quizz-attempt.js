@@ -22,7 +22,7 @@ module.exports = function (QuizzAttempt) {
     var error = {name: "No Question", message: "That question does not exist", status: 404};
     var out = {};
     var zeThis = this;
-    if(this.state == 2) cb(error);
+    if(this.state > 1) cb(error);
     else {
       this.quizz(function (er, quizz) {
         if (er) cb(er);
@@ -60,13 +60,12 @@ module.exports = function (QuizzAttempt) {
   };
 
   QuizzAttempt.prototype.validate = function (cb) {
-    var zeThis = this;
-    zeThis.state = 2;
-    zeThis.save(function (er, obj) {
+    this.state = 2;
+    this.save(function (er, obj) {
       if (er) cb(er);
       else QuizzAttempt.findOne({
         where: {
-          userId: zeThis.userId,
+          userId: this.userId,
           state: 1
         }
       }, function (er, res) {
@@ -75,7 +74,7 @@ module.exports = function (QuizzAttempt) {
           console.log(res);
           cb(null,200);
         } else {
-          zeThis.interview(function (er, itw) {
+          this.interview(function (er, itw) {
             if (er) cb(er);
             else {
               itw.state = 2;
@@ -86,8 +85,8 @@ module.exports = function (QuizzAttempt) {
             }
           });
         }
-      });
-    });
+      }.bind(this));
+    }.bind(this));
   };
 
   QuizzAttempt.questions = function (filter, cb) {

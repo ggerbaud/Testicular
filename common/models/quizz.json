@@ -34,7 +34,7 @@
     {
       "accessType": "READ",
       "principalType": "ROLE",
-      "principalId": "itw",
+      "principalId": "rh",
       "permission": "ALLOW"
     },
     {

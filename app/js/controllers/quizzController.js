@@ -1,4 +1,4 @@
-angular.module('ZenQuizz').controller('DoQuizzController', function ($scope, $location, $routeParams, QuizzAttempt) {
+angular.module('ZenQuizz').controller('quizz.do', ['$scope', '$location', '$routeParams', 'QuizzAttempt', function ($scope, $location, $routeParams, QuizzAttempt) {
   "use strict";
 
   $scope.quizzId = $routeParams.id;
@@ -14,9 +14,9 @@ angular.module('ZenQuizz').controller('DoQuizzController', function ($scope, $lo
 
   $scope.getData();
 
-});
+}]);
 
-angular.module('ZenQuizz').controller('DoQuestionController', function ($scope, $location, $routeParams, _, QuizzAttempt) {
+angular.module('ZenQuizz').controller('quizz.question', ['$scope','$location', '$routeParams', 'QuizzAttempt', '_', function ($scope, $location, $routeParams, QuizzAttempt, _) {
   "use strict";
 
   $scope.quizzId = parseInt($routeParams.id, 10);
@@ -39,9 +39,7 @@ angular.module('ZenQuizz').controller('DoQuestionController', function ($scope, 
             comment: '',
             questionId: question.question.id,
             quizzAttemptId: $scope.quizzId,
-            choices: _.map(Array(question.question.choices.length), function () {
-              return false;
-            })
+            choices: _.times(question.question.choices.length, _.constant(false))
           };
         }
       }, function(response) {
@@ -70,9 +68,9 @@ angular.module('ZenQuizz').controller('DoQuestionController', function ($scope, 
 
   $scope.getData();
 
-});
+}]);
 
-angular.module('ZenQuizz').controller('EndQuizzController', function ($scope, $location, $routeParams, QuizzAttempt) {
+angular.module('ZenQuizz').controller('quizz.end', function ($scope, $location, $routeParams, QuizzAttempt) {
   "use strict";
 
   $scope.quizzId = $routeParams.id ? parseInt($routeParams.id, 10) : -1;

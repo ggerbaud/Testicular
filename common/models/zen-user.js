@@ -1,5 +1,6 @@
 var _ = require('lodash');
-var passwd = require("password-maker");
+var passwd = require('password-maker');
+var loopback = require('loopback');
 
 
 module.exports = function (ZenUser) {
@@ -94,6 +95,21 @@ module.exports = function (ZenUser) {
     }, cb);
   };
 
+  ZenUser.hasRole = function (role, cb) {
+
+    var RoleMapping = ZenUser.app.models.RoleMapping;
+    var userId = loopback.getCurrentContext().active.accessToken.userId;
+
+    RoleMapping.find({where: {principalId: userId}, include: 'role'}, function (er, roles) {
+      if (er) cb(er);
+      else {
+        if(_(roles).map(function (r) {return r.role();}).find({name: role}))        cb(null, true);
+        else cb(null, false);
+      }
+    });
+
+  };
+
   ZenUser.remoteMethod('userInterview', {
     returns: {root: true, type: 'Interview'},
     http: {path: '/myInterview', verb: 'get'},
@@ -120,7 +136,7 @@ module.exports = function (ZenUser) {
   });
 
   ZenUser.remoteMethod('listCandidats', {
-    returns: {root: true, type: 'ZenUser'},
+    returns: {root: true, type: 'array'},
     http: {path: '/candidats', verb: 'get'}
   });
 
@@ -130,6 +146,14 @@ module.exports = function (ZenUser) {
     ],
     returns: {root: true, type: 'ZenUser'},
     http: {path: '/candidat/:id', verb: 'get'}
+  });
+
+  ZenUser.remoteMethod('hasRole', {
+    accepts: [
+      {arg: 'role', type: 'string'}
+    ],
+    returns: {arg: 'hasRole', type: 'boolean'},
+    http: {path: '/hasRole', verb: 'get'}
   });
 
 };

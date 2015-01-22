@@ -1547,6 +1547,42 @@ module.factory(
           method: "PUT"
         },
 
+        /**
+         * @ngdoc method
+         * @name lbServices.Question#unanswered
+         * @methodOf lbServices.Question
+         *
+         * @description
+         *
+         * <em>
+         * (The remote method definition does not provide any description.)
+         * </em>
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Question` object.)
+         * </em>
+         */
+        "unanswered": {
+          url: urlBase + "/Questions/unanswered",
+          method: "GET"
+        },
+
         // INTERNAL. Use Answer.question() instead.
         "::get::Answer::question": {
           url: urlBase + "/Answers/:id/question",
@@ -6034,6 +6070,40 @@ module.factory(
           method: "PUT"
         },
 
+        /**
+         * @ngdoc method
+         * @name lbServices.Quizz#prototype$safeDelete
+         * @methodOf lbServices.Quizz
+         *
+         * @description
+         *
+         * <em>
+         * (The remote method definition does not provide any description.)
+         * </em>
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * Data properties:
+         *
+         *  - `deleted` – `{boolean=}` - 
+         */
+        "prototype$safeDelete": {
+          url: urlBase + "/Quizz/:id/safeDeleteById",
+          method: "DELETE"
+        },
+
         // INTERNAL. Use Question.quizzs.findById() instead.
         "::findById::Question::quizzs": {
           url: urlBase + "/Questions/:id/quizzs/:fk",
@@ -8963,6 +9033,198 @@ module.factory(
           method: "GET"
         },
 
+        /**
+         * @ngdoc method
+         * @name lbServices.ZenUser#newCandidat
+         * @methodOf lbServices.ZenUser
+         *
+         * @description
+         *
+         * <em>
+         * (The remote method definition does not provide any description.)
+         * </em>
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
+         *
+         * @param {Object} postData Request data.
+         *
+         *  - `email` – `{string}` - 
+         *
+         *  - `name` – `{string}` - 
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `ZenUser` object.)
+         * </em>
+         */
+        "newCandidat": {
+          url: urlBase + "/ZenUsers/createCandidat",
+          method: "POST"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.ZenUser#newSpecialUser
+         * @methodOf lbServices.ZenUser
+         *
+         * @description
+         *
+         * <em>
+         * (The remote method definition does not provide any description.)
+         * </em>
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
+         *
+         * @param {Object} postData Request data.
+         *
+         *  - `email` – `{string}` - 
+         *
+         *  - `name` – `{string}` - 
+         *
+         *  - `role` – `{string}` - 
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `ZenUser` object.)
+         * </em>
+         */
+        "newSpecialUser": {
+          url: urlBase + "/ZenUsers/createSpecialUser",
+          method: "POST"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.ZenUser#listCandidats
+         * @methodOf lbServices.ZenUser
+         *
+         * @description
+         *
+         * <em>
+         * (The remote method definition does not provide any description.)
+         * </em>
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `ZenUser` object.)
+         * </em>
+         */
+        "listCandidats": {
+          isArray: true,
+          url: urlBase + "/ZenUsers/candidats",
+          method: "GET"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.ZenUser#getCandidat
+         * @methodOf lbServices.ZenUser
+         *
+         * @description
+         *
+         * <em>
+         * (The remote method definition does not provide any description.)
+         * </em>
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{number=}` - 
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `ZenUser` object.)
+         * </em>
+         */
+        "getCandidat": {
+          url: urlBase + "/ZenUsers/candidat/:id",
+          method: "GET"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.ZenUser#hasRole
+         * @methodOf lbServices.ZenUser
+         *
+         * @description
+         *
+         * <em>
+         * (The remote method definition does not provide any description.)
+         * </em>
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `role` – `{string=}` - 
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * Data properties:
+         *
+         *  - `hasRole` – `{boolean=}` - 
+         */
+        "hasRole": {
+          url: urlBase + "/ZenUsers/hasRole",
+          method: "GET"
+        },
+
         // INTERNAL. Use Interview.user() instead.
         "::get::Interview::user": {
           url: urlBase + "/Interviews/:id/user",
@@ -9981,7 +10243,9 @@ module.factory(
          *   populated with the actual data once the response is returned
          *   from the server.
          *
-         * This method returns no data.
+         * Data properties:
+         *
+         *  - `status` – `{number=}` - 
          */
         "prototype$validate": {
           url: urlBase + "/QuizzAttempts/:id/validate",

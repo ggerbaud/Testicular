@@ -46,7 +46,7 @@
       "principalType": "ROLE",
       "principalId": "rh",
       "permission": "ALLOW",
-      "property": "create"
+      "property": "upsert"
     },
     {
       "accessType": "EXECUTE",

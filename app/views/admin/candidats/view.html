@@ -1,0 +1,6 @@
+<a href="#/adm/candidats">Retour</a><br/><br/>
+<b>{{user.normalName}}</b><br/><br/>
+<a href="#/adm/interviews/-1/u/{{user.id}}/edit">New Itw</a><br/><br/>
+<div ng-repeat="i in itws">
+  <a href="#/adm/interviews/{{i.id}}/u/{{user.id}}">{{i.name}}</a>
+</div>

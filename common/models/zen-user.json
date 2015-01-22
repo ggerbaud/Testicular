@@ -67,6 +67,13 @@
       "principalId": "itw",
       "permission": "ALLOW",
       "property": "newSpecialUser"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW",
+      "property": "hasRole"
     }
   ],
   "methods": []

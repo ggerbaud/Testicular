@@ -1,4 +1,4 @@
-angular.module('ZenQuizz').controller('MainController', function ($scope, $location,  ZenUser, userService) {
+angular.module('ZenQuizz').controller('main.main', ['$scope', '$location', 'ZenUser', 'userService', function ($scope, $location,  ZenUser, userService) {
   "use strict";
 
   $scope.getInterview = function () {
@@ -17,4 +17,18 @@ angular.module('ZenQuizz').controller('MainController', function ($scope, $locat
 
   $scope.getInterview();
 
-});
+}])
+.controller('main.login', ['$scope', '$location', 'ZenUser', function ($scope, $location, ZenUser) {
+  "use strict";
+
+  $scope.user = {};
+
+  $scope.login = function () {
+    ZenUser.login({rememberMe: false}, $scope.user, function () {
+      var next = $location.nextAfterLogin || '/';
+      $location.nextAfterLogin = null;
+      $location.path(next);
+    });
+  };
+
+}]);

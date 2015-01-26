@@ -1,5 +1,5 @@
-angular.module('ZenQuizz', ['ngRoute', 'ng-underscore', 'lbServices'])
-  .config(['_Provider', '$httpProvider', '$routeProvider', 'LoopBackResourceProvider', 'routeValue', function (_Provider, $httpProvider, $routeProvider, LoopBackResourceProvider, routeValue) {
+angular.module('ZenQuizz', ['ngRoute', 'ng-underscore', 'ngMaterial', 'lbServices'])
+  .config(['_Provider', '$httpProvider', '$routeProvider', 'LoopBackResourceProvider', 'routeValue', '$mdThemingProvider', function (_Provider, $httpProvider, $routeProvider, LoopBackResourceProvider, routeValue, $mdThemingProvider) {
 
     var defaulResolvers = {};
     defaulResolvers.userAuthenticated = ['$q', 'authService', 'userService', function ($q, authService, userService) {
@@ -83,6 +83,13 @@ angular.module('ZenQuizz', ['ngRoute', 'ng-underscore', 'lbServices'])
 
     // set api url, dev only, to be removed after that
     LoopBackResourceProvider.setUrlBase('http://192.168.1.84:3000/api');
+
+    // Material Design config
+    $mdThemingProvider.theme('default')
+      .primaryColor('indigo')
+      .accentColor('pink')
+      .warnColor('red')
+      .backgroundColor('grey');
 
   }])
   .run(['$rootScope', '$log', '$location', 'authService', function ($rootScope, $log, $location, authService) {

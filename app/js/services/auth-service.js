@@ -1,12 +1,15 @@
 function AuthApi(ZenUser, LoopBackAuth) {
 
   this.logout = function logout() {
-    ZenUser.logout(function(a,b){}, function(e){
+    return ZenUser.logout(function(){
+      this.clearUser();
+    }.bind(this), function(e){
       console.log('logout error');
       if(e.status == 500 || e.status == 401) {
         this.clearUser();
       }
-    }.bind(this));
+      return e;
+    }.bind(this)).$promise;
   };
 
   this.clearUser = function clearUser() {

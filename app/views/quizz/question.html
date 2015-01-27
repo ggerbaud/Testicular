@@ -1,23 +1,19 @@
-<div>
-  <h2>{{q.question.title}}</h2>
+<section layout-padding>
+  <md-subheader class="md-accent">{{q.question.title}}</md-subheader>
 
-  <div ng-switch="q.question.type">
-
-    <div ng-switch-when="1">
-      <p ng-repeat="c in q.question.choices">
-        {{c}} : <input type="checkbox" ng-model="q.attempt.choices[$index]" name="c"/>
-      </p>
-    </div>
-
-  </div>
+  <md-input-container ng-repeat="c in q.question.choices">
+    <md-checkbox ng-model="q.attempt.choices[$index]" aria-label="c" class="md-accent">{{c}}</md-checkbox>
+  </md-input-container>
 
   <form name="qs">
 
-    Commentaire * :<br/>
-    <textarea name="comment" ng-model="q.attempt.comment" ng-required="!q.attempt.comment"></textarea><br/><br/>
+    <md-input-container flex="50">
+      <label>Commentaire *</label>
+      <textarea name="comment" ng-model="q.attempt.comment" ng-required="!q.attempt.comment"></textarea><br/><br/>
+    </md-input-container>
 
     <a href="#/do/quizz/{{quizzId}}/question/{{questionNo - 1}}" ng-hide="questionNo == 0">Annuler et
       Précédente</a><br/>
     <a href="" ng-click="next()" ng-show="qs.comment.$valid">Valider et suivante</a><br/>
   </form>
-</div>
+</section>

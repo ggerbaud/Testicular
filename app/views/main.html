@@ -1,11 +1,21 @@
-<div ng-show="itw">
-  <h2>{{itw.name}}</h2>
-  <ul>
-    <li ng-repeat="qz in itw.quizzAttempts">
-      <a href="#/do/quizz/{{qz.id}}">{{qz.quizz.name}}</a>
-    </li>
-  </ul>
-</div>
-<div ng-hide="itw">
+<section ng-show="itw">
+  <md-subheader class="md-accent">Questionnaires</md-subheader>
+  <md-list>
+    <md-item ng-repeat="qz in itw.quizzAttempts">
+      <md-item-content ng-click="chooseQuizz(qz.id)">
+        <div class="md-tile-left">
+          <span> </span>
+        </div>
+        <div class="md-tile-content">
+          <h3>{{qz.quizz.name}}</h3>
+        </div>
+        <div class="md-tile-right">
+          <span> {{qz.startDate}}</span>
+        </div>
+      </md-item-content>
+    </md-item>
+  </md-list>
+</section>
+<section ng-hide="itw">
   No interview
-</div>
+</section>

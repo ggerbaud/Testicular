@@ -9,6 +9,9 @@
     },
     "validationDate": {
       "type": "date"
+    },
+    "startDate": {
+      "type": "date"
     }
   },
   "validations": [],

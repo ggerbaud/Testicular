@@ -1,5 +1,4 @@
-<div>
-  <h2>{{info.quizzName}}</h2>
-  Il y aura {{info.nbQuestion}} questions !!<br/>
-  <a href="#/do/quizz/{{info.attempt.id}}/question/0">Go ?</a>
-</div>
+<section layout="row" layout-fill layout-padding>
+  <div flex layout="row" layout-align="end center"><span>Il y aura {{info.nbQuestion}} questions !!</span></div>
+  <div flex><md-button class="md-fab md-accent" href="#/do/quizz/{{info.attempt.id}}/question/0">Go ?</md-button></div>
+</section>

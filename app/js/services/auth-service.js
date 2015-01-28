@@ -14,7 +14,7 @@ function AuthApi(itwService, ZenUser, LoopBackAuth) {
 
   this.clearUser = function clearUser() {
     console.log('clear');
-    itwService.reset();
+    itwService.clearCache();
     LoopBackAuth.clearUser();
     LoopBackAuth.clearStorage();
   };

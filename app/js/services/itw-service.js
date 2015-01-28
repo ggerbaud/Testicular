@@ -16,19 +16,26 @@ function ItwApi($q, $cacheFactory, userService, ZenUser, QuizzAttempt) {
   };
 
   this.question = function (quizzId, questionNo, question) {
-    if(question) {
-      return QuizzAttempt.prototype$__create__attempts({id: quizzId}, question.attempt).$promise;
+    if (question) {
+      if (question.attempt.id) {
+        return QuizzAttempt.prototype$__updateById__attempts({
+          id: quizzId,
+          fk: question.attempt.id
+        }, question.attempt).$promise;
+      } else {
+        return QuizzAttempt.prototype$__create__attempts({id: quizzId}, question.attempt).$promise;
+      }
     }
     else {
       return QuizzAttempt.prototype$quizzQuestions({id: quizzId, n: questionNo}).$promise;
     }
   };
 
-  this.validateQuizz = function(quizzId) {
+  this.validateQuizz = function (quizzId) {
     return QuizzAttempt.prototype$validate({id: quizzId}).$promise
   };
 
-  this.reset = function () {
+  this.clearCache = function () {
     cache.removeAll();
   };
 

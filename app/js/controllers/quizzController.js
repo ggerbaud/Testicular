@@ -68,6 +68,7 @@ angular.module('ZenQuizz')
 
       $scope.validate = function () {
         itwService.validateQuizz($scope.info.attempt.id).then(function (data) {
+          itwService.clearCache();
           if (data.status == 200) {
             $location.path('/');
           }

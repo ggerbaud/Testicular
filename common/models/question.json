@@ -21,6 +21,9 @@
     },
     "language": {
       "type": "string"
+    },
+    "shouldComment": {
+      "type": "boolean"
     }
   },
   "validations": [],

@@ -17,4 +17,10 @@ module.exports = function (Question) {
     http: {path: '/unanswered', verb: 'get'}
   });
 
+  Question.beforeSave = function(next, modelInstance) {
+    // Feel free questions should have an answer / comment
+    modelInstance.shouldComment = modelInstance.shouldComment || (modelInstance.type == 3 || modelInstance.type == 4);
+    next();
+  };
+
 };

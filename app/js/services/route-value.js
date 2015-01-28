@@ -3,7 +3,7 @@ angular.module('ZenQuizz').constant('routeValue', {
   '/home': {
     templateUrl: 'views/main.html', controller: 'main.main', resolve: {
       itw: ['$location', 'itwService', function ($location, itwService) {
-        return itwService.itw().then(null, function (rejection) {
+        return itwService.itw().catch(function (rejection) {
           if (rejection.status === 404) {
             $location.path('/noitw');
           }
@@ -15,7 +15,7 @@ angular.module('ZenQuizz').constant('routeValue', {
   '/do/quizz/:id': {
     templateUrl: 'views/quizz/do.html', controller: 'quizz.do', resolve: {
       itw: ['$location', 'itwService', function ($location, itwService) {
-        return itwService.itw().then(null, function (rejection) {
+        return itwService.itw().catch(function (rejection) {
           if (rejection.status === 404) {
             $location.path('/noitw');
           }
@@ -23,7 +23,7 @@ angular.module('ZenQuizz').constant('routeValue', {
         });
       }],
       info: ['$location', '$route', 'itwService', function ($location, $route, itwService) {
-        return itwService.quizzInfo($route.current.params.id).then(null, function (rejection) {
+        return itwService.quizzInfo($route.current.params.id).catch(function (rejection) {
           if (rejection.status === 404) {
             $location.path('/noquizz');
           }
@@ -32,11 +32,10 @@ angular.module('ZenQuizz').constant('routeValue', {
       }]
     }
   },
-  '/do/quizz/:id/end': {templateUrl: 'views/quizz/end.html', controller: 'quizz.end'},
-  '/do/quizz/:id/question/:n': {
-    templateUrl: 'views/quizz/question.html', controller: 'quizz.question', resolve: {
+  '/do/quizz/:id/end': {
+    templateUrl: 'views/quizz/end.html', controller: 'quizz.end', resolve: {
       itw: ['$location', 'itwService', function ($location, itwService) {
-        return itwService.itw().then(null, function (rejection) {
+        return itwService.itw().catch(function (rejection) {
           if (rejection.status === 404) {
             $location.path('/noitw');
           }
@@ -44,17 +43,37 @@ angular.module('ZenQuizz').constant('routeValue', {
         });
       }],
       info: ['$location', '$route', 'itwService', function ($location, $route, itwService) {
-        return itwService.quizzInfo($route.current.params.id).then(null, function (rejection) {
+        return itwService.quizzInfo($route.current.params.id).catch(function (rejection) {
           if (rejection.status === 404) {
             $location.path('/noquizz');
           }
           return rejection;
         });
-      }],
-      question: ['$route', 'itwService', function ($route, itwService) {
-        return itwService.question($route.current.params.id, $route.current.params.n).then(null, function(rejection) {
-          if(rejection.status === 404) {
+      }]
+    }
+  },
+  '/do/quizz/:id/question/:n': {
+    templateUrl: 'views/quizz/question.html', controller: 'quizz.question', resolve: {
+      question: ['$location', '$route', 'itwService', function ($location, $route, itwService) {
+        return itwService.question($route.current.params.id, $route.current.params.n).catch(function (rejection) {
+          if (rejection.status === 404) {
             $location.path('do/quizz/' + $route.current.params.id + '/end');
+          }
+          return rejection;
+        });
+      }],
+      itw: ['$location', 'itwService', function ($location, itwService) {
+        return itwService.itw().catch(function (rejection) {
+          if (rejection.status === 404) {
+            $location.path('/noitw');
+          }
+          return rejection;
+        });
+      }],
+      info: ['$location', '$route', 'itwService', function ($location, $route, itwService) {
+        return itwService.quizzInfo($route.current.params.id).catch(function (rejection) {
+          if (rejection.status === 404) {
+            $location.path('/noquizz');
           }
           return rejection;
         });

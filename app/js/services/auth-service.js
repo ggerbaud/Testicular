@@ -1,4 +1,4 @@
-function AuthApi(ZenUser, LoopBackAuth) {
+function AuthApi(itwService, ZenUser, LoopBackAuth) {
 
   this.logout = function logout() {
     return ZenUser.logout(function(){
@@ -14,6 +14,7 @@ function AuthApi(ZenUser, LoopBackAuth) {
 
   this.clearUser = function clearUser() {
     console.log('clear');
+    itwService.reset();
     LoopBackAuth.clearUser();
     LoopBackAuth.clearStorage();
   };
@@ -27,4 +28,4 @@ function AuthApi(ZenUser, LoopBackAuth) {
   };
 }
 
-angular.module('ZenQuizz').service('authService', ['ZenUser', 'LoopBackAuth', AuthApi]);
+angular.module('ZenQuizz').service('authService', ['itwService', 'ZenUser', 'LoopBackAuth', AuthApi]);

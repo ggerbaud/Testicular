@@ -1,8 +1,11 @@
-<div>
-  <h2>{{info.quizzName}}</h2>
-  Vous avez répondu à toutes les questions<br/>
+<section>
+  <md-subheader>Vous avez répondu à toutes les questions de ce quizz</md-subheader>
 
-  <a ng-hide="validated" href="#/do/quizz/{{info.attempt.id}}/question/0">Revoir les réponses</a><br/>
-  <a ng-hide="validated" href="" ng-click="validate()">Valider les réponses</a>
-  <span ng-show="validated">Tout est validé, vous pouvez quitter l'application</span>
-</div>
+  <section layout="row">
+    <section ng-hide="validated" layout="row" layout-padding layout-align="space-around center" flex="50">
+      <md-button class="md-raised" href="#/do/quizz/{{info.attempt.id}}/question/0">Revoir les réponses</md-button>
+      <md-button class="md-raised md-warn" ng-click="validate()">Valider les réponses</md-button>
+    </section>
+    <span ng-show="validated">Tout est validé, vous pouvez quitter l'application</span>
+  </section>
+</section>

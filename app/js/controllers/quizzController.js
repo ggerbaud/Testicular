@@ -22,20 +22,21 @@ angular.module('ZenQuizz')
 
     }])
   .controller('quizz.question',
-  ['$scope', '$location', '$routeParams', 'Breadcrumbs', '_', 'itw', 'info', 'question',
-    function ($scope, $location, $routeParams, Breadcrumbs, _, itw, info, question) {
+  ['$scope', '$location', '$routeParams', 'Breadcrumbs', 'itwService', '_', 'itw', 'info', 'question',
+    function ($scope, $location, $routeParams, Breadcrumbs, itwService, _, itw, info, question) {
       "use strict";
 
       $scope.quizzId = info.attempt.id;
       $scope.questionNo = parseInt($routeParams.n, 10);
       $scope.q = question;
-      var newAnswer = !!(question.attempt);
       $scope.q.attempt = $scope.q.attempt || {
         comment: '',
         questionId: question.question.id,
-        quizzAttemptId: $scope.quizzId,
-        choices: _.times(question.question.choices.length, _.constant(false))
+        quizzAttemptId: $scope.quizzId
       };
+      if (question.question.choices && !$scope.q.attempt.choices) {
+        $scope.q.attempt.choices = _.times(question.question.choices.length, _.constant(false));
+      }
 
       Breadcrumbs.setCrumbs([
         {label: itw.name, route: "#/home"},
@@ -44,55 +45,39 @@ angular.module('ZenQuizz')
       ]);
 
       $scope.next = function () {
-        var promise;
-        if (newAnswer) {
-          promise = QuizzAttempt.prototype$__create__attempts({id: $scope.quizzId}, $scope.q.attempt).$promise;
-        } else {
-          promise = QuizzAttempt.prototype$__updateById__attempts({
-            id: $scope.quizzId,
-            fk: $scope.q.attempt.id
-          }, $scope.q.attempt).$promise;
-        }
-        promise.then(function () {
+        itwService.question($scope.quizzId, 0, $scope.q).then(function () {
           $location.path('/do/quizz/' + $scope.quizzId + '/question/' + ($scope.questionNo + 1));
         }, function (er) {
           console.error(er);
         });
       };
 
+    }])
+  .controller('quizz.end',
+  ['$scope', 'Breadcrumbs', '$location', '$routeParams', 'itw', 'info', 'itwService',
+    function ($scope, Breadcrumbs, $location, $routeParams, itw, info, itwService) {
+      "use strict";
+
+      $scope.validated = info.attempt.state == 2;
+      $scope.info = info;
+
+      Breadcrumbs.setCrumbs([
+        {label: itw.name, route: "#/home"},
+        {label: info.quizzName, route: "#/do/quizz/" + $scope.info.attempt.id}
+      ]);
+
+      $scope.validate = function () {
+        itwService.validateQuizz($scope.info.attempt.id).then(function (data) {
+          if (data.status == 200) {
+            $location.path('/');
+          }
+          else if (data.status == 204) {
+            $scope.validated = true;
+          }
+          else {
+            console.log(data);
+          }
+        });
+      };
+
     }]);
-
-angular.module('ZenQuizz').controller('quizz.end', function ($scope, $location, $routeParams, QuizzAttempt) {
-  "use strict";
-
-  $scope.quizzId = $routeParams.id ? parseInt($routeParams.id, 10) : -1;
-  $scope.validated = $scope.quizzId < 0;
-
-  $scope.getData = function () {
-    if (!$scope.validated) {
-      QuizzAttempt.prototype$quizzInfo({id: $scope.quizzId}).$promise.then(function (info) {
-        $scope.info = info;
-        if (info.attempt.state == 2) {
-          $scope.validated = true;
-        }
-      });
-    }
-  };
-
-  $scope.validate = function () {
-    QuizzAttempt.prototype$validate({id: $scope.quizzId}).$promise.then(function (data) {
-      if (data.status == 200) {
-        $location.path('/');
-      }
-      else if (data.status == 204) {
-        $scope.validated = true;
-      }
-      else {
-        console.log(data);
-      }
-    });
-  };
-
-  $scope.getData();
-
-});

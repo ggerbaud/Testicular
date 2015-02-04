@@ -121,6 +121,7 @@ angular.module('ZenQuizz').constant('routeValue', {
   },
   '/noquizz': {templateUrl: 'views/quizz/noquizz.html', controller: angular.noop},
   '/noitw': {templateUrl: 'views/noitw.html', controller: angular.noop},
+  '/auth/google/callback' : {template: '', controller: 'main.login.google', public: true},
   '/login': {
     templateUrl: 'views/login.html', controller: 'main.login', public: true, resolve: {
       data: ['authService', '$location', function (authService, $location) {

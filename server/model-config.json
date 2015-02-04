@@ -65,5 +65,11 @@
   "QuizzAttempt": {
     "dataSource": "db",
     "public": true
+  },
+  "ZenUserCredential": {
+    "dataSource": "db"
+  },
+  "ZenUserIdentity": {
+    "dataSource": "db"
   }
 }

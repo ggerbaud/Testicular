@@ -13,18 +13,24 @@ angular.module('ZenQuizz').controller('main.main', ['$scope', 'Breadcrumbs', '$l
     };
 
   }])
-  .controller('main.login', ['$scope', '$location', 'ZenUser', function ($scope, $location, ZenUser) {
+  .controller('main.login', ['$scope', '$location', 'authService', function ($scope, $location, authService) {
     "use strict";
 
     $scope.user = {};
 
     $scope.login = function () {
-      ZenUser.login({rememberMe: false}, $scope.user, function () {
+      authService.login(false, $scope.user).then(function () {
         var next = $location.nextAfterLogin || '/';
         $location.nextAfterLogin = null;
-        console.log('go to ' + next);
         $location.path(next);
       });
     };
+
+  }])
+  .controller('main.login.google', ['$location', '$cookies', 'authService', function ($location, $cookies, authService) {
+    "use strict";
+
+    authService.setUser($cookies.access_token, $cookies.userId);
+    $location.path('/home');
 
   }]);

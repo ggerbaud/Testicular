@@ -18,6 +18,16 @@
       "type": "hasMany",
       "model": "Interview",
       "foreignKey": "ownerId"
+    },
+    "identities": {
+      "type": "hasMany",
+      "model": "ZenUserIdentity",
+      "foreignKey": "userId"
+    },
+    "credentials": {
+      "type": "hasMany",
+      "model": "ZenUserCredential",
+      "foreignKey": "userId"
     }
   },
   "acls": [

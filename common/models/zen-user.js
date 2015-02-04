@@ -110,6 +110,22 @@ module.exports = function (ZenUser) {
 
   };
 
+  ZenUser.googleProfileToUser = function profileToUser(provider, profile) {
+    var email = profile.emails && profile.emails[0] && profile.emails[0].value;
+    var normalName = profile.displayName || "Anonymous";
+    var username = profile.username || profile.id;
+    var password = passwd(10);
+    var userObj = {
+      username: username,
+      password: password,
+      email: email,
+      candidat: false,
+      normalName: normalName,
+      zenika: true
+    };
+    return userObj;
+  };
+
   ZenUser.remoteMethod('userInterview', {
     returns: {root: true, type: 'Interview'},
     http: {path: '/myInterview', verb: 'get'},

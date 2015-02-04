@@ -1,0 +1,19 @@
+{
+  "google-login": {
+    "provider": "google",
+    "module": "passport-google-oauth",
+    "strategy": "OAuth2Strategy",
+    "clientID": "",
+    "clientSecret": "",
+    "callbackURL": "http://localhost:3000/auth/google/callback",
+    "authOptions": {"hostedDomain": "zenika.com"},
+    "authPath": "/auth/google",
+    "callbackPath": "/auth/google/callback",
+    "successRedirect": "/#/auth/google/callback",
+    "failureRedirect": "/#/login",
+    "scope": [
+      "email",
+      "profile"
+    ]
+  }
+}

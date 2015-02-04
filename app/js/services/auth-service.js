@@ -12,6 +12,10 @@ function AuthApi(itwService, ZenUser, LoopBackAuth) {
     }.bind(this)).$promise;
   };
 
+  this.login = function login(remember, user) {
+    return ZenUser.login({rememberMe: remember}, user).$promise;
+  };
+
   this.clearUser = function clearUser() {
     console.log('clear');
     itwService.clearCache();
@@ -25,6 +29,10 @@ function AuthApi(itwService, ZenUser, LoopBackAuth) {
 
   this.hasRole = function hasRole(role) {
     return ZenUser.hasRole({role: role}).$promise;
+  };
+
+  this.setUser = function setUser(accessToken, userId) {
+    LoopBackAuth.setUser(accessToken, userId);
   };
 }
 

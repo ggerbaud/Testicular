@@ -1,5 +1,5 @@
 angular
-  .module('ZenQuizz', ['ngRoute', 'ng-underscore', 'ngMaterial', 'lbServices', 'hljs'])
+  .module('ZenQuizz', ['ngRoute', 'ngCookies', 'ng-underscore', 'ngMaterial', 'lbServices', 'hljs'])
   .config(
   ['_Provider', '$httpProvider', '$routeProvider', 'LoopBackResourceProvider', 'routeValue', '$mdThemingProvider',
     function (_Provider, $httpProvider, $routeProvider, LoopBackResourceProvider, routeValue, $mdThemingProvider) {
@@ -89,15 +89,12 @@ angular
         };
       }]);
 
-      // set api url, dev only, to be removed after that
-      //LoopBackResourceProvider.setUrlBase('http://192.168.1.84:3000/api');
-
       // Material Design config
       $mdThemingProvider.theme('default')
-        .primaryColor('indigo')
-        .accentColor('pink')
-        .warnColor('red')
-        .backgroundColor('grey');
+        .primaryPalette('indigo')
+        .accentPalette('pink')
+        .warnPalette('red')
+        .backgroundPalette('grey');
 
     }])
   .run(['$rootScope', '$log', '$location', 'authService', function ($rootScope, $log, $location, authService) {

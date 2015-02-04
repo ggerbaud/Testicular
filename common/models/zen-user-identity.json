@@ -1,0 +1,16 @@
+{
+  "name": "ZenUserIdentity",
+  "plural": "ZenUserIdentities",
+  "base": "UserIdentity",
+  "properties": {},
+  "validations": [],
+  "relations": {
+    "user": {
+      "type": "belongsTo",
+      "model": "ZenUser",
+      "foreignKey": "userId"
+    }
+  },
+  "acls": [],
+  "methods": []
+}

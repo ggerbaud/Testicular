@@ -5,6 +5,7 @@
     "strategy": "OAuth2Strategy",
     "clientID": "",
     "clientSecret": "",
+    "session": "true",
     "callbackURL": "http://localhost:3000/auth/google/callback",
     "authOptions": {"hostedDomain": "zenika.com"},
     "authPath": "/auth/google",

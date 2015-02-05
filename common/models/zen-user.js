@@ -100,13 +100,26 @@ module.exports = function (ZenUser) {
     var RoleMapping = ZenUser.app.models.RoleMapping;
     var userId = loopback.getCurrentContext().active.accessToken.userId;
 
-    RoleMapping.find({where: {principalId: userId}, include: 'role'}, function (er, roles) {
-      if (er) cb(er);
-      else {
-        if(_(roles).map(function (r) {return r.role();}).find({name: role}))        cb(null, true);
-        else cb(null, false);
-      }
-    });
+    if (role === 'zenika') {
+      ZenUser.findById(userId, function (er, user) {
+        if (er) cb(er);
+        else {
+          cb(null, !!user.zenika);
+        }
+      });
+    } else {
+
+      RoleMapping.find({where: {principalId: userId}, include: 'role'}, function (er, roles) {
+        if (er) cb(er);
+        else {
+          if (_(roles).map(function (r) {
+              return r.role();
+            }).find({name: role}))        cb(null, true);
+          else cb(null, false);
+        }
+      });
+
+    }
 
   };
 

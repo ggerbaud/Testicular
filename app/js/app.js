@@ -5,20 +5,20 @@ angular
     function (_Provider, $httpProvider, $routeProvider, LoopBackResourceProvider, routeValue, $mdThemingProvider) {
 
       var defaulResolvers = {};
-      defaulResolvers.userAuthenticated = ['$q', 'authService', 'userService', function ($q, authService, userService) {
+      defaulResolvers.userAuthenticated = ['$q', 'authService', function ($q, authService) {
         var deferred = $q.defer();
 
         var reject = function () {
           deferred.reject('login_required');
         };
 
-        if (authService.isAuthenticated()) {
-          userService().then(function (user) {
-            deferred.resolve(user);
-          })
-        } else {
-          reject();
-        }
+        authService.isAuthenticated().then(function (auth) {
+          if (auth) {
+            deferred.resolve(authService.getUser());
+          } else {
+            reject();
+          }
+        });
 
         return deferred.promise;
       }];
@@ -34,6 +34,7 @@ angular
 
         if (params.role && !params.public) {
           resolve.role = ['$q', 'authService', function ($q, authService) {
+
             var deferred = $q.defer();
 
             authService.hasRole(params.role).then(function (result) {
@@ -74,12 +75,11 @@ angular
         return {
           responseError: function (rejection) {
             if (rejection.status == 401) {
-              if ($location.path() !== '/logout') {
-                console.log('401 on ' + $location.path());
+              if($location.path() === '/login') {
+                console.log('401 on /login');
+              }
+              else {
                 $location.nextAfterLogin = $location.path();
-                $location.path('/logout');
-              } else {
-                console.log('401 on logout ???');
                 $injector.get('authService').clearUser();
                 $location.path('/login');
               }

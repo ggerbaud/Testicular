@@ -1,9 +1,10 @@
 angular.module('ZenQuizz').constant('routeValue', {
-  '/': {redirectTo: '/login', public: true},
+  '/': {redirectTo: '/home', public: true},
   '/home': {
     templateUrl: 'views/main.html', controller: 'main.main', resolve: {
       itw: ['$location', 'itwService', function ($location, itwService) {
         return itwService.itw().catch(function (rejection) {
+          console.error('itw catch');
           if (rejection.status === 404) {
             $location.path('/noitw');
           }
@@ -80,7 +81,7 @@ angular.module('ZenQuizz').constant('routeValue', {
       }]
     }
   },
-  '/adm/': {templateUrl: 'views/admin/main.html', controller: angular.noop, role: ['rh']},
+  '/adm/': {templateUrl: 'views/admin/main.html', controller: angular.noop},
   '/adm/candidats': {
     templateUrl: 'views/admin/candidats.html', controller: 'admin.candidats', role: ['rh'], resolve: {
       candidats: ['ZenUser', function (ZenUser) {
@@ -121,14 +122,16 @@ angular.module('ZenQuizz').constant('routeValue', {
   },
   '/noquizz': {templateUrl: 'views/quizz/noquizz.html', controller: angular.noop},
   '/noitw': {templateUrl: 'views/noitw.html', controller: angular.noop},
-  '/auth/google/callback' : {template: '', controller: 'main.login.google', public: true},
+  '/auth/google/callback': {template: '', controller: 'main.login.google', public: true},
   '/login': {
     templateUrl: 'views/login.html', controller: 'main.login', public: true, resolve: {
       data: ['authService', '$location', function (authService, $location) {
-        if (authService.isAuthenticated()) {
-          console.log('Authenticated, go to home');
-          $location.path('/home');
-        }
+        authService.isAuthenticated().then(function (auth) {
+          if (auth) {
+            console.log('Authenticated, go to home');
+            $location.path('/home');
+          }
+        });
       }]
     }
   }

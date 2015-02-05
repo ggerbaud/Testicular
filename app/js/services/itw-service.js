@@ -1,13 +1,12 @@
-function ItwApi($q, $cacheFactory, userService, ZenUser, QuizzAttempt) {
+function ItwApi($q, $cacheFactory, authService, ZenUser, QuizzAttempt) {
 
   var cache = $cacheFactory.get('itw-cache') || $cacheFactory('itw-cache');
 
   this.itw = function () {
     return _cacheGetSet('itw', function () {
-      return userService()
-        .then(function (user) {
-          return ZenUser.prototype$userInterview({id: user.id}).$promise;
-        });
+      return authService.getUser().then(function (user) {
+        return ZenUser.prototype$userInterview({id: user.id}).$promise;
+      });
     });
   };
 
@@ -55,4 +54,4 @@ function ItwApi($q, $cacheFactory, userService, ZenUser, QuizzAttempt) {
 
 }
 
-angular.module('ZenQuizz').service('itwService', ['$q', '$cacheFactory', 'userService', 'ZenUser', 'QuizzAttempt', ItwApi]);
+angular.module('ZenQuizz').service('itwService', ['$q', '$cacheFactory', 'authService', 'ZenUser', 'QuizzAttempt', ItwApi]);

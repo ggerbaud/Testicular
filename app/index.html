@@ -1,33 +1,59 @@
 <!DOCTYPE html>
 <html ng-app="ZenQuizz" ng-strict-di>
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width">
-    <title>ZenQuizz</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width">
+  <title>ZenQuizz</title>
 
-    <!-- build:css css/ZenQuizz.css -->
-    <!-- bower:css -->
-    <link rel="stylesheet" href="vendor/angular-material/angular-material.css" />
-    <link rel="stylesheet" href="vendor/highlightjs/styles/default.css" />
-    <!-- endbower -->
-    <link rel="stylesheet" href="css/app.css"/>
-    <!-- endbuild -->
+  <!-- build:css css/ZenQuizz.css -->
+  <!-- bower:css -->
+  <link rel="stylesheet" href="vendor/angular-material/angular-material.css"/>
+  <link rel="stylesheet" href="vendor/highlightjs/styles/default.css"/>
+  <!-- endbower -->
+  <link rel="stylesheet" href="css/app.css"/>
+  <!-- endbuild -->
 </head>
-<body ng-controller="main.root">
+<body ng-controller="main.root" layout="row">
+<md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" ng-if="!shouldHideMenu()">
+
+  <md-toolbar>
+    <h1 class="md-toolbar-tools">
+      <a ng-href="/#/adm" layout="row" flex>
+        <div style="line-height:40px; text-indent: 15px;">Admin</div>
+      </a>
+    </h1>
+  </md-toolbar>
+  <md-list>
+    <md-item ng-repeat="item in adminMenu" ng-if="hasRole(item.role)">
+      <md-item-content md-padding>
+        <div class="md-title-left" layout-padding>
+          <md-icon icon="{{item.img}}"></md-icon>
+        </div>
+        <div class="md-title-content">
+          <menu-link>{{item.title}}</menu-link>
+        </div>
+      </md-item-content>
+    </md-item>
+  </md-list>
+</md-sidenav>
 <md-content layout-fill>
   <md-toolbar md-scroll-shrink>
-    <h2 class="md-toolbar-tools">
+    <h2 class="md-toolbar-tools" ng-click="openMenu()">
+      <button class="menu-icon" ng-hide="shouldHideMenu()" aria-label="Toggle Menu">
+        <md-icon icon="img/icons/ic_menu_24px.svg"></md-icon>
+      </button>
       <span>ZenQuizz</span>
       <span ng-hide="isBreadcrumbsEmpty()">&nbsp;&nbsp;:&nbsp;&nbsp;</span>
       <span ng-repeat="crumb in breadcrumbs()">
-        <span ng-hide="$first"> > </span> <a href="{{crumb.route}}" ng-hide="$last">{{crumb.label}}</a> <span ng-show="$last">{{crumb.label}}</span>
+        <span ng-hide="$first"> > </span> <a href="{{crumb.route}}" ng-hide="$last">{{crumb.label}}</a> <span
+        ng-show="$last">{{crumb.label}}</span>
 			</span>
       <span flex></span>
       <md-button href="/#/logout" aria-label="Se déconnecter" class="md-warn md-raised md-hue-2">Déconnexion</md-button>
     </h2>
   </md-toolbar>
-  <md-content  class="md-padding" layout-fill>
+  <md-content class="md-padding" layout-fill>
     <div ng-view=""></div>
   </md-content>
 </md-content>
@@ -51,7 +77,6 @@
 <script type="text/javascript" src="js/controllers/quizzController.js"></script>
 <script type="text/javascript" src="js/controllers/admin/adminController.js"></script>
 <script type="text/javascript" src="js/services/lb-services.js"></script>
-<script type="text/javascript" src="js/services/user-service.js"></script>
 <script type="text/javascript" src="js/services/auth-service.js"></script>
 <script type="text/javascript" src="js/services/itw-service.js"></script>
 <script type="text/javascript" src="js/services/route-value.js"></script>

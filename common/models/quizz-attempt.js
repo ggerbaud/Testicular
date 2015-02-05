@@ -23,7 +23,7 @@ module.exports = function (QuizzAttempt) {
   QuizzAttempt.prototype.quizzQuestions = function (n, cb) {
     var error = {name: "No Question", message: "That question does not exist", status: 404};
     var out = {};
-    var zeThis = this;
+    var self = this;
     if(this.state > 1) cb(error);
     else {
       this.quizz(function (er, quizz) {
@@ -43,9 +43,9 @@ module.exports = function (QuizzAttempt) {
           else {
             out.question = qs[0].question();
             out.rank = n;
-            zeThis.attempts({
+            self.attempts({
               where: {
-                and: [{quizzAttemptId: zeThis.id}, {questionId: out.question.id}]
+                and: [{quizzAttemptId: self.id}, {questionId: out.question.id}]
               }
             }, function (er, atts) {
               if (er) {

@@ -2,6 +2,10 @@ angular.module('ZenQuizz').controller('main.main', ['$scope', 'Breadcrumbs', '$l
   function ($scope, Breadcrumbs, $location, itw) {
     "use strict";
 
+    console.log(itw);
+
+    console.log('coucou home');
+
     Breadcrumbs.setCrumbs([
       {label: itw.name, route: "#/home"}
     ]);
@@ -13,13 +17,17 @@ angular.module('ZenQuizz').controller('main.main', ['$scope', 'Breadcrumbs', '$l
     };
 
   }])
-  .controller('main.login', ['$scope', '$location', 'authService', function ($scope, $location, authService) {
+  .controller('main.login', ['$scope', 'Breadcrumbs', '$location', 'authService', function ($scope, Breadcrumbs, $location, authService) {
     "use strict";
+
+    console.log('coucou login');
+
+    Breadcrumbs.setCrumbs([]);
 
     $scope.user = {};
 
     $scope.login = function () {
-      authService.login(false, $scope.user).then(function () {
+      authService.login(true, $scope.user).then(function () {
         var next = $location.nextAfterLogin || '/';
         $location.nextAfterLogin = null;
         $location.path(next);
@@ -31,6 +39,7 @@ angular.module('ZenQuizz').controller('main.main', ['$scope', 'Breadcrumbs', '$l
     "use strict";
 
     authService.setUser($cookies.access_token, $cookies.userId);
-    $location.path('/home');
+    authService.clearRole();
+    $location.path('/adm');
 
   }]);

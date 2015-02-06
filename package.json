@@ -2,10 +2,10 @@
   "name": "zen-quizz",
   "version": "0.1.0",
   "description": "Quizz application based on loopback.io",
-  "author": "Zenika Ouest",
+  "author": "Guillaume Gerbaud",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ZenikaOuest/Testicular"
+    "url": "https://github.com/ggerbaud/Testicular"
   },
   "main": "server/server.js",
   "scripts": {

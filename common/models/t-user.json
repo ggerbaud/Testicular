@@ -1,5 +1,5 @@
 {
-  "name": "ZenUser",
+  "name": "TUser",
   "base": "User",
   "idInjection": true,
   "properties": {
@@ -21,12 +21,12 @@
     },
     "identities": {
       "type": "hasMany",
-      "model": "ZenUserIdentity",
+      "model": "TUserIdentity",
       "foreignKey": "userId"
     },
     "credentials": {
       "type": "hasMany",
-      "model": "ZenUserCredential",
+      "model": "TUserCredential",
       "foreignKey": "userId"
     }
   },

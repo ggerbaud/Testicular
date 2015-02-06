@@ -1,4 +1,4 @@
-angular.module('ZenQuizz').factory("Breadcrumbs", function () {
+angular.module('Testicular').factory("Breadcrumbs", function () {
   var crumbs = [];
   return {
     crumbs:function () {

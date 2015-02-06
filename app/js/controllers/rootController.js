@@ -1,5 +1,7 @@
-angular.module('ZenQuizz').controller('main.root', ['$scope', '$timeout', '$mdSidenav', 'Breadcrumbs', 'authService', function ($scope, $timeout, $mdSidenav, Breadcrumbs, authService) {
+angular.module('Testicular').controller('main.root', ['$scope', '$timeout', '$mdSidenav', 'Breadcrumbs', 'authService', function ($scope, $timeout, $mdSidenav, Breadcrumbs, authService) {
   "use strict";
+
+  $scope._hasRole = {};
 
   $scope.breadcrumbs = function () {
     return Breadcrumbs.crumbs();
@@ -18,16 +20,24 @@ angular.module('ZenQuizz').controller('main.root', ['$scope', '$timeout', '$mdSi
   };
 
   $scope.shouldHideMenu = function () {
-    return !$scope.hasRole('zenika');
+    return !$scope.hasRole('editor');
   };
 
   $scope.hasRole = function (role) {
-    return authService.hasRoleSync(role).hasRole;
+    if($scope._hasRole[role] === undefined) {
+      $scope._hasRole[role] = false;
+      authService.hasRole(role).then(function(result) {
+        $scope._hasRole[role] = result.hasRole;
+      }, function () {
+        delete $scope._hasRole[role]
+      });
+    }
+    return $scope._hasRole[role];
   };
 
   $scope.adminMenu = [
     {role: 'rh', img: 'img/icons/ic_people_24px.svg', title: 'Candidats'},
-    {role: 'zenika', img: 'img/icons/ic_people_24px.svg', title: 'Candidats2'},
+    {role: 'editor', img: 'img/icons/ic_people_24px.svg', title: 'Candidats2'},
   ];
 
 }]);

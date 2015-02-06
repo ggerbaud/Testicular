@@ -20,15 +20,15 @@ passportConfigurator.init(false);
 
 // set up related models
 passportConfigurator.setupModels({
-  userModel: app.models.ZenUser,
-  userCredentialModel: app.models.ZenUserCredential,
-  userIdentityModel: app.models.ZenUserIdentity
+  userModel: app.models.TUser,
+  userCredentialModel: app.models.TUserCredential,
+  userIdentityModel: app.models.TUserIdentity
 });
 
 for(var strategy in config) {
   var conf = _.assign(config[strategy], credentials);
   conf.session = conf.session !== false;
-  conf.profileToUser = app.models.ZenUser.googleProfileToUser;
+  conf.profileToUser = app.models.TUser.googleProfileToUser;
   passportConfigurator.configureProvider(strategy, conf);
 }
 

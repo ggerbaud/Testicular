@@ -1,12 +1,13 @@
 {
-  "name": "ZenUserCredential",
-  "base": "UserCredential",
+  "name": "TUserIdentity",
+  "plural": "TUserIdentities",
+  "base": "UserIdentity",
   "properties": {},
   "validations": [],
   "relations": {
     "user": {
       "type": "belongsTo",
-      "model": "ZenUser",
+      "model": "TUser",
       "foreignKey": "userId"
     }
   },

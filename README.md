@@ -1,4 +1,4 @@
-ZenQuizz
+Testicular
 ==================
 
 ## Prerequisites

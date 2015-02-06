@@ -1,4 +1,4 @@
-angular.module('ZenQuizz')
+angular.module('Testicular')
   .controller('quizz.do',
   ['$scope', 'Breadcrumbs', '$location', '$routeParams', 'itw', 'info',
     function ($scope, Breadcrumbs, $location, $routeParams, itw, info) {

@@ -1,11 +1,11 @@
-function ItwApi($q, $cacheFactory, authService, ZenUser, QuizzAttempt) {
+function ItwApi(cacheService, authService, TUser, QuizzAttempt) {
 
-  var cache = $cacheFactory.get('itw-cache') || $cacheFactory('itw-cache');
+  var cache = cacheService.get('itw-cache');
 
   this.itw = function () {
-    return _cacheGetSet('itw', function () {
+    return cache.getAndSet('itw', function () {
       return authService.getUser().then(function (user) {
-        return ZenUser.prototype$userInterview({id: user.id}).$promise;
+        return TUser.prototype$userInterview({id: user.id}).$promise;
       });
     });
   };
@@ -38,20 +38,6 @@ function ItwApi($q, $cacheFactory, authService, ZenUser, QuizzAttempt) {
     cache.removeAll();
   };
 
-  var _cacheGetSet = function (key, f) {
-    var q = $q.defer();
-    if (cache.get(key)) {
-      q.resolve(cache.get(key));
-    } else {
-      f().then(function (data) {
-        q.resolve(cache.put(key, data));
-      }, function (rejection) {
-        q.reject(rejection);
-      });
-    }
-    return q.promise;
-  }
-
 }
 
-angular.module('ZenQuizz').service('itwService', ['$q', '$cacheFactory', 'authService', 'ZenUser', 'QuizzAttempt', ItwApi]);
+angular.module('Testicular').service('itwService', ['cacheService', 'authService', 'TUser', 'QuizzAttempt', ItwApi]);

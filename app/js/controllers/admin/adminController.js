@@ -1,4 +1,4 @@
-angular.module('ZenQuizz')
+angular.module('Testicular')
   .controller('admin.candidats', ['$scope', 'candidats', function ($scope, candidats) {
     "use strict";
 
@@ -8,13 +8,13 @@ angular.module('ZenQuizz')
 
 
   }])
-  .controller('admin.candidats.new', ['$scope', 'ZenUser', function ($scope, ZenUser) {
+  .controller('admin.candidats.new', ['$scope', 'TUser', function ($scope, TUser) {
     "use strict";
 
     $scope.user = {};
 
     $scope.send = function () {
-      ZenUser.newCandidat({}, $scope.user, function (data) {
+      TUser.newCandidat({}, $scope.user, function (data) {
         $scope.created = data;
       }, function (httpResponse) {
         if (httpResponse.status == 422) {
@@ -26,7 +26,7 @@ angular.module('ZenQuizz')
 
 
   }])
-  .controller('admin.candidats.view', ['$scope', 'ZenUser', 'user', 'itws', function ($scope, ZenUser, user, itws) {
+  .controller('admin.candidats.view', ['$scope', 'TUser', 'user', 'itws', function ($scope, TUser, user, itws) {
     "use strict";
 
     $scope.user = user;

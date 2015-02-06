@@ -1,10 +1,6 @@
-angular.module('ZenQuizz').controller('main.main', ['$scope', 'Breadcrumbs', '$location', 'itw',
+angular.module('Testicular').controller('main.main', ['$scope', 'Breadcrumbs', '$location', 'itw',
   function ($scope, Breadcrumbs, $location, itw) {
     "use strict";
-
-    console.log(itw);
-
-    console.log('coucou home');
 
     Breadcrumbs.setCrumbs([
       {label: itw.name, route: "#/home"}
@@ -19,8 +15,6 @@ angular.module('ZenQuizz').controller('main.main', ['$scope', 'Breadcrumbs', '$l
   }])
   .controller('main.login', ['$scope', 'Breadcrumbs', '$location', 'authService', function ($scope, Breadcrumbs, $location, authService) {
     "use strict";
-
-    console.log('coucou login');
 
     Breadcrumbs.setCrumbs([]);
 

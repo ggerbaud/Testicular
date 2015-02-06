@@ -1,5 +1,5 @@
 angular
-  .module('ZenQuizz', ['ngRoute', 'ngCookies', 'ng-underscore', 'ngMaterial', 'lbServices', 'hljs'])
+  .module('Testicular', ['ngRoute', 'ngCookies', 'ng-underscore', 'ngMaterial', 'lbServices', 'hljs'])
   .config(
   ['_Provider', '$httpProvider', '$routeProvider', 'LoopBackResourceProvider', 'routeValue', '$mdThemingProvider',
     function (_Provider, $httpProvider, $routeProvider, LoopBackResourceProvider, routeValue, $mdThemingProvider) {

@@ -32,7 +32,7 @@
     },
     "owner": {
       "type": "belongsTo",
-      "model": "ZenUser",
+      "model": "TUser",
       "foreignKey": "ownerId"
     }
   },

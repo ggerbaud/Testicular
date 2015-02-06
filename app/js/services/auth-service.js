@@ -1,11 +1,11 @@
-function AuthApi($q, $cacheFactory, $cookies, ZenUser, LoopBackAuth) {
+function AuthApi($q, $cookies, cacheService, TUser, LoopBackAuth) {
 
-  var cache = $cacheFactory.get('auth-cache') || $cacheFactory('auth-cache');
+  var cache = cacheService.get('auth-cache');
 
   var falseRole = {hasRole: false};
 
   this.logout = function logout() {
-    return ZenUser.logout(function () {
+    return TUser.logout(function () {
       this.clearUser();
     }.bind(this), function (e) {
       console.log('logout error');
@@ -17,7 +17,7 @@ function AuthApi($q, $cacheFactory, $cookies, ZenUser, LoopBackAuth) {
   };
 
   this.login = function login(remember, user) {
-    return ZenUser.login({rememberMe: remember}, user).$promise;
+    return TUser.login({rememberMe: remember}, user).$promise;
   };
 
   this.clearUser = function clearUser() {
@@ -25,7 +25,7 @@ function AuthApi($q, $cacheFactory, $cookies, ZenUser, LoopBackAuth) {
     itwCache.removeAll();
     LoopBackAuth.clearUser();
     LoopBackAuth.clearStorage();
-    this.clearRole();
+    cacheService.clear();
     delete $cookies.access_token;
     delete $cookies.userId;
   };
@@ -36,13 +36,13 @@ function AuthApi($q, $cacheFactory, $cookies, ZenUser, LoopBackAuth) {
 
   this.getUser = function () {
     // no api call here
-    var current = ZenUser.getCachedCurrent();
+    var current = TUser.getCachedCurrent();
     if (!current) {
-      if($cookies.access_token && $cookies.userId) {
+      if ($cookies.access_token && $cookies.userId) {
         this.setUser($cookies.access_token, $cookies.userId);
       }
       // it's a promise !! Also fail with 401 if no user logged in
-      return ZenUser.getCurrent().$promise;
+      return TUser.getCurrent().$promise;
     }
     else {
       // get the user the promise way
@@ -55,7 +55,7 @@ function AuthApi($q, $cacheFactory, $cookies, ZenUser, LoopBackAuth) {
   this.isAuthenticated = function isAuthenticated() {
     var q = $q.defer();
 
-    if (ZenUser.isAuthenticated()) {
+    if (TUser.isAuthenticated() && !cache.get('lock-user')) {
       q.resolve(true);
     } else {
       this.getUser().then(function (user) {
@@ -70,51 +70,19 @@ function AuthApi($q, $cacheFactory, $cookies, ZenUser, LoopBackAuth) {
 
   this.hasRole = function hasRole(role) {
     return this.isAuthenticated().then(function (auth) {
-      if(!auth) {
+      if (!auth) {
         return cache.put('role' + role, falseRole);
       } else {
-        return _cacheGetSet('role' + role, function () {
-          return ZenUser.hasRole({role: role}).$promise
-        }).then(function(resp) {
-          return resp;
+        return cache.getAndSet('role' + role, function () {
+          return TUser.hasRole({role: role}).$promise
         });
       }
     });
   };
 
-  this.hasRoleSync = function hasRoleSync(role) {
-    if (cache.get('role' + role)) {
-      return cache.get('role' + role);
-    } else {
-      this.hasRole(role);
-      return falseRole;
-    }
-  };
-
   this.setUser = function setUser(accessToken, userId) {
     LoopBackAuth.setUser(accessToken, userId);
   };
-
-  var _cacheGetSet = function (key, f) {
-    var q = $q.defer();
-    if (cache.get(key)) {
-      q.resolve(cache.get(key));
-    } else {
-      if (!cache.get('lock' + key)) {
-        cache.put('lock' + key, q);
-        f().then(function (data) {
-          cache.remove('lock' + key);
-          q.resolve(cache.put(key, data));
-        }, function (rejection) {
-          cache.remove('lock' + key);
-          q.reject(rejection);
-        });
-      } else {
-        return cache.get('lock' + key).promise;
-      }
-    }
-    return q.promise;
-  }
 }
 
-angular.module('ZenQuizz').service('authService', ['$q', '$cacheFactory', '$cookies', 'ZenUser', 'LoopBackAuth', AuthApi]);
+angular.module('Testicular').service('authService', ['$q', '$cookies', 'cacheService', 'TUser', 'LoopBackAuth', AuthApi]);

@@ -41,3 +41,4 @@ app/vendor
 .sass-cache/
 
 docular_generated/*
+app/js/services/lb-services.js

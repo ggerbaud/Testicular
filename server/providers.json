@@ -7,7 +7,6 @@
     "clientSecret": "",
     "session": "true",
     "callbackURL": "http://localhost:3000/auth/google/callback",
-    "authOptions": {"hostedDomain": "zenika.com"},
     "authPath": "/auth/google",
     "callbackPath": "/auth/google/callback",
     "successRedirect": "/#/auth/google/callback",

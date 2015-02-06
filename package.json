@@ -5,7 +5,7 @@
   "author": "Zenika Ouest",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ZenikaOuest/zenquizz"
+    "url": "https://github.com/ZenikaOuest/Testicular"
   },
   "main": "server/server.js",
   "scripts": {

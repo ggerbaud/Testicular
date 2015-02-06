@@ -3,9 +3,9 @@ var passwd = require('password-maker');
 var loopback = require('loopback');
 
 
-module.exports = function (ZenUser) {
+module.exports = function (TUser) {
 
-  ZenUser.prototype.userInterview = function (cb) {
+  TUser.prototype.userInterview = function (cb) {
     this.interviews({where: {state: 1}, limit: 1, include: {quizzAttempts: 'quizz'}}, function (er, res) {
       if (er) cb(er);
       else if (!res[0]) cb({name: "No Interview", message: "No interview found for that user", status: 404});
@@ -13,7 +13,7 @@ module.exports = function (ZenUser) {
     });
   };
 
-  ZenUser.newSpecialUser = function (email, name, role, cb) {
+  TUser.newSpecialUser = function (email, name, role, cb) {
     if (!_.isString(email) || _.isEmpty(email)) {
       cb({message: "email should be a string", status: 400})
       return;
@@ -29,12 +29,12 @@ module.exports = function (ZenUser) {
       password: passwd(8),
       candidat: false
     };
-    ZenUser.create(zenUser, function (er, user) {
+    TUser.create(zenUser, function (er, user) {
       if (er) cb(er);
       else {
         user.generated = zenUser.password;
-        var Role = ZenUser.app.models.Role;
-        var RoleMapping = ZenUser.app.models.RoleMapping;
+        var Role = TUser.app.models.Role;
+        var RoleMapping = TUser.app.models.RoleMapping;
         Role.findOne({where: {name: role}}, function (er, r) {
           if (er) cb(er);
           else {
@@ -55,7 +55,7 @@ module.exports = function (ZenUser) {
     });
   };
 
-  ZenUser.newCandidat = function (email, name, cb) {
+  TUser.newCandidat = function (email, name, cb) {
     if (!_.isString(email) || _.isEmpty(email)) {
       cb({message: "email should be a string", status: 400})
       return;
@@ -74,7 +74,7 @@ module.exports = function (ZenUser) {
       }, 8),
       candidat: true
     };
-    ZenUser.create(zenUser, function (er, user) {
+    TUser.create(zenUser, function (er, user) {
       if (er) cb(er);
       else {
         user.generated = zenUser.password;
@@ -83,28 +83,28 @@ module.exports = function (ZenUser) {
     });
   };
 
-  ZenUser.listCandidats = function (cb) {
-    ZenUser.find({
+  TUser.listCandidats = function (cb) {
+    TUser.find({
       where: {candidat: true}
     }, cb);
   };
 
-  ZenUser.getCandidat = function (id, cb) {
-    ZenUser.findOne({
+  TUser.getCandidat = function (id, cb) {
+    TUser.findOne({
       where: {candidat: true, id: id}
     }, cb);
   };
 
-  ZenUser.hasRole = function (role, cb) {
+  TUser.hasRole = function (role, cb) {
 
-    var RoleMapping = ZenUser.app.models.RoleMapping;
+    var RoleMapping = TUser.app.models.RoleMapping;
     var userId = loopback.getCurrentContext().active.accessToken.userId;
 
-    if (role === 'zenika') {
-      ZenUser.findById(userId, function (er, user) {
+    if (role === 'editor') {
+      TUser.findById(userId, function (er, user) {
         if (er) cb(er);
         else {
-          cb(null, !!user.zenika);
+          cb(null, !!user.editor);
         }
       });
     } else {
@@ -123,7 +123,7 @@ module.exports = function (ZenUser) {
 
   };
 
-  ZenUser.googleProfileToUser = function profileToUser(provider, profile) {
+  TUser.googleProfileToUser = function profileToUser(provider, profile) {
     var email = profile.emails && profile.emails[0] && profile.emails[0].value;
     var normalName = profile.displayName || "Anonymous";
     var username = profile.username || profile.id;
@@ -134,50 +134,50 @@ module.exports = function (ZenUser) {
       email: email,
       candidat: false,
       normalName: normalName,
-      zenika: true
+      editor: true
     };
     return userObj;
   };
 
-  ZenUser.remoteMethod('userInterview', {
+  TUser.remoteMethod('userInterview', {
     returns: {root: true, type: 'Interview'},
     http: {path: '/myInterview', verb: 'get'},
     isStatic: false
   });
 
-  ZenUser.remoteMethod('newCandidat', {
+  TUser.remoteMethod('newCandidat', {
     accepts: [
       {arg: 'email', type: 'string', required: true},
       {arg: 'name', type: 'string', required: true}
     ],
-    returns: {root: true, type: 'ZenUser'},
+    returns: {root: true, type: 'TUser'},
     http: {path: '/createCandidat', verb: 'post'}
   });
 
-  ZenUser.remoteMethod('newSpecialUser', {
+  TUser.remoteMethod('newSpecialUser', {
     accepts: [
       {arg: 'email', type: 'string', required: true},
       {arg: 'name', type: 'string', required: true},
       {arg: 'role', type: 'string', required: true}
     ],
-    returns: {root: true, type: 'ZenUser'},
+    returns: {root: true, type: 'TUser'},
     http: {path: '/createSpecialUser', verb: 'post'}
   });
 
-  ZenUser.remoteMethod('listCandidats', {
+  TUser.remoteMethod('listCandidats', {
     returns: {root: true, type: 'array'},
     http: {path: '/candidats', verb: 'get'}
   });
 
-  ZenUser.remoteMethod('getCandidat', {
+  TUser.remoteMethod('getCandidat', {
     accepts: [
       {arg: 'id', type: 'number', http: {source: 'path'}}
     ],
-    returns: {root: true, type: 'ZenUser'},
+    returns: {root: true, type: 'TUser'},
     http: {path: '/candidat/:id', verb: 'get'}
   });
 
-  ZenUser.remoteMethod('hasRole', {
+  TUser.remoteMethod('hasRole', {
     accepts: [
       {arg: 'role', type: 'string'}
     ],

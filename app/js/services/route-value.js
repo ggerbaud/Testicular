@@ -1,4 +1,4 @@
-angular.module('ZenQuizz').constant('routeValue', {
+angular.module('Testicular').constant('routeValue', {
   '/': {redirectTo: '/home', public: true},
   '/home': {
     templateUrl: 'views/main.html', controller: 'main.main', resolve: {
@@ -84,8 +84,8 @@ angular.module('ZenQuizz').constant('routeValue', {
   '/adm/': {templateUrl: 'views/admin/main.html', controller: angular.noop},
   '/adm/candidats': {
     templateUrl: 'views/admin/candidats.html', controller: 'admin.candidats', role: ['rh'], resolve: {
-      candidats: ['ZenUser', function (ZenUser) {
-        return ZenUser.listCandidats().$promise;
+      candidats: ['TUser', function (TUser) {
+        return TUser.listCandidats().$promise;
       }]
     }
   },
@@ -96,8 +96,8 @@ angular.module('ZenQuizz').constant('routeValue', {
   },
   '/adm/candidats/:id': {
     templateUrl: 'views/admin/candidats/view.html', controller: 'admin.candidats.view', role: ['rh'], resolve: {
-      user: ['$route', 'ZenUser', function ($route, ZenUser) {
-        return ZenUser.getCandidat({id: $route.current.params.id}).$promise;
+      user: ['$route', 'TUser', function ($route, TUser) {
+        return TUser.getCandidat({id: $route.current.params.id}).$promise;
       }],
       itws: ['$route', 'Interview', function ($route, Interview) {
         return Interview.find({filter: {where: {ownerId: $route.current.params.id}}}).$promise;

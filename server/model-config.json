@@ -58,7 +58,7 @@
     "dataSource": "db",
     "public": true
   },
-  "ZenUser": {
+  "TUser": {
     "dataSource": "db",
     "public": true
   },
@@ -66,10 +66,10 @@
     "dataSource": "db",
     "public": true
   },
-  "ZenUserCredential": {
+  "TUserCredential": {
     "dataSource": "db"
   },
-  "ZenUserIdentity": {
+  "TUserIdentity": {
     "dataSource": "db"
   }
 }
